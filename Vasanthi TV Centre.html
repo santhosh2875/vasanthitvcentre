@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vasanthi TV Centre — Your Trusted Home Appliance Store in Kanchipuram</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{fontFamily:{heading:['Space Grotesk','sans-serif'],body:['Inter','sans-serif']},colors:{charcoal:'#1a1a1a','charcoal-light':'#2a2a2a',amber:'#D4922A','amber-light':'#E8A840','amber-glow':'#F5C16C',silver:'#A8A8A8','silver-light':'#D0D0D0',cream:'#FAF8F5','warm-white':'#FDFCFA'}}}}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#FAF8F5;color:#1a1a1a;overflow-x:hidden}
+h1,h2,h3,h4,h5,h6{font-family:'Space Grotesk',sans-serif}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.3}
+.hero-bg-video,.hero-bg-freeze{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-bg-video{z-index:0}
+.hero-bg-freeze{z-index:1;background-size:cover;background-position:center;opacity:0;transition:opacity .6s ease}
+.hero-video-ended .hero-bg-video{opacity:0}
+.hero-video-ended .hero-bg-freeze{opacity:1}
+.hero-bg-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(110deg,rgba(0,0,0,.86) 0%,rgba(0,0,0,.7) 45%,rgba(0,0,0,.52) 100%)}
+.hero-title-main{color:#fff;text-shadow:0 8px 30px rgba(0,0,0,.85),0 0 18px rgba(0,0,0,.6)}
+.hero-title-sub{color:#FFD67A;text-shadow:0 6px 18px rgba(0,0,0,.8)}
+.hero-copy{color:#F5F5F5;text-shadow:0 4px 14px rgba(0,0,0,.8)}
+.hero-nav-text{color:#fff !important;text-shadow:0 2px 10px rgba(0,0,0,.65)}
+.hero-nav-brand{color:#fff !important;text-shadow:0 3px 12px rgba(0,0,0,.75)}
+.nav-scrolled .hero-nav-text{color:#1a1a1a !important;text-shadow:none}
+.nav-scrolled .hero-nav-brand{color:#1a1a1a !important;text-shadow:none}
+.nav-scrolled #bar1,.nav-scrolled #bar2,.nav-scrolled #bar3{background:#1a1a1a !important}
+.nav-link{position:relative}
+.nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:#D4922A;transition:width .3s}
+.nav-link:hover::after{width:100%}
+.product-card{transition:transform .35s cubic-bezier(.25,.46,.45,.94),box-shadow .35s}
+.product-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.1)}
+.service-card{transition:transform .3s,border-color .3s}
+.service-card:hover{transform:translateY(-4px);border-color:#D4922A}
+.cta-btn{transition:all .3s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(212,146,42,.35)}
+.stat-counter{font-variant-numeric:tabular-nums}
+.mobile-menu{clip-path:circle(0% at calc(100% - 2rem) 2rem);transition:clip-path .5s cubic-bezier(.77,0,.175,1)}
+.mobile-menu.open{clip-path:circle(150% at calc(100% - 2rem) 2rem)}
+.testimonial-card{background:linear-gradient(135deg,#fff 0%,#FAF8F5 100%)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.float-anim{animation:float 4s ease-in-out infinite}
+.product-card img{transition:transform .5s cubic-bezier(.25,.46,.45,.94)}
+.product-card:hover img{transform:scale(1.08)}
+.product-card::before{content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.15) 50%,transparent 100%);transform:skewX(-25deg);transition:left .6s ease}
+.product-card:hover::before{left:125%}
+.product-card{position:relative;overflow:hidden}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.5)}70%{box-shadow:0 0 0 12px rgba(37,211,102,0)}}
+.whatsapp-fab{animation:pulse-glow 2s infinite}
+.brand-ticker{display:flex;gap:3rem;animation:ticker 20s linear infinite}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+</style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300" style="background:transparent">
+  <div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
+    <a href="#" class="hero-nav-brand font-heading font-bold text-xl">Vasanthi <span class="text-amber">TV Centre</span></a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#products" class="hero-nav-text nav-link text-sm font-medium">Products</a>
+      <a href="#why-us" class="hero-nav-text nav-link text-sm font-medium">Why Us</a>
+      <a href="#services" class="hero-nav-text nav-link text-sm font-medium">Services</a>
+      <a href="#about" class="hero-nav-text nav-link text-sm font-medium">About</a>
+      <a href="#contact" class="hero-nav-text nav-link text-sm font-medium">Contact</a>
+      <a href="tel:+919894121661" class="cta-btn bg-amber text-white text-sm font-semibold px-5 py-2.5 rounded-full">Call Now</a>
+    </div>
+    <button id="menu-toggle" class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+      <span class="block w-6 h-0.5 bg-white transition-all origin-center" id="bar1"></span>
+      <span class="block w-6 h-0.5 bg-white transition-all" id="bar2"></span>
+      <span class="block w-6 h-0.5 bg-white transition-all origin-center" id="bar3"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="mobile-menu fixed inset-0 z-40 bg-charcoal flex flex-col items-center justify-center gap-8">
+  <a href="#products" class="mob-link text-2xl font-heading font-semibold text-warm-white">Products</a>
+  <a href="#why-us" class="mob-link text-2xl font-heading font-semibold text-warm-white">Why Us</a>
+  <a href="#services" class="mob-link text-2xl font-heading font-semibold text-warm-white">Services</a>
+  <a href="#about" class="mob-link text-2xl font-heading font-semibold text-warm-white">About</a>
+  <a href="#contact" class="mob-link text-2xl font-heading font-semibold text-warm-white">Contact</a>
+  <a href="tel:+919894121661" class="cta-btn bg-amber text-white font-semibold px-8 py-3 rounded-full mt-4 text-lg">Call Now</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section id="hero" class="relative min-h-screen flex items-center overflow-hidden bg-charcoal">
+  <video id="hero-video" class="hero-bg-video" autoplay muted playsinline preload="auto" poster="0427(1)-lastframe.jpg" data-desktop-webm="0427(1).webm" data-desktop-mp4="0427(1).mp4" data-desktop-poster="0427(1)-lastframe.jpg" data-mobile-webm="0427(2).webm" data-mobile-mp4="0427(2).mp4" data-mobile-poster="0427(2)-lastframe.jpg">
+    <source src="0427(1).webm" type="video/webm">
+    <source src="0427(1).mp4" type="video/mp4">
+  </video>
+  <div id="hero-lastframe" class="hero-bg-freeze" style="background-image:url('0427(1)-lastframe.jpg')"></div>
+  <div class="hero-bg-overlay"></div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="relative z-10 max-w-6xl mx-auto px-5 py-32 flex items-center justify-center w-full">
+    <div class="text-center">
+      <h1 class="hero-title-main font-heading font-bold text-5xl sm:text-6xl lg:text-8xl leading-tight hero-fade">Vasanthi TV Centre</h1>
+      <p class="hero-title-sub font-semibold text-xl sm:text-2xl mt-4 hero-fade">Trusted Home Appliances in Kanchipuram</p>
+      <p class="hero-copy mt-5 text-base sm:text-lg max-w-2xl mx-auto hero-fade">Best brands. Fair price. Reliable service.</p>
+      <div class="flex flex-wrap justify-center gap-4 mt-8 hero-fade">
+        <a href="tel:+919894121661" class="cta-btn bg-amber hover:bg-amber-light text-white font-semibold px-7 py-3.5 rounded-full inline-flex items-center gap-2">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Call Now
+        </a>
+        <a href="https://wa.me/919894121661" target="_blank" class="cta-btn border-2 border-silver/30 text-warm-white hover:border-green-500 font-semibold px-7 py-3.5 rounded-full inline-flex items-center gap-2">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.12 1.52 5.856L0 24l6.335-1.652A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.82a9.78 9.78 0 01-5.202-1.49l-.374-.222-3.87 1.01 1.034-3.772-.244-.388A9.78 9.78 0 012.18 12 9.82 9.82 0 0112 2.18 9.82 9.82 0 0121.82 12 9.82 9.82 0 0112 21.82z"/></svg>
+          WhatsApp Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS BAR ===== -->
+<section class="bg-white border-y border-black/5">
+  <div class="max-w-7xl mx-auto px-5 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    <div class="stat-item"><p class="font-heading font-bold text-3xl text-charcoal stat-counter" data-target="25">0</p><p class="text-sm text-silver mt-1">Years of Trust</p></div>
+    <div class="stat-item"><p class="font-heading font-bold text-3xl text-charcoal stat-counter" data-target="10000">0</p><p class="text-sm text-silver mt-1">Happy Customers</p></div>
+    <div class="stat-item"><p class="font-heading font-bold text-3xl text-charcoal stat-counter" data-target="500">0</p><p class="text-sm text-silver mt-1">Products Available</p></div>
+    <div class="stat-item"><p class="font-heading font-bold text-3xl text-charcoal stat-counter" data-target="50">0</p><p class="text-sm text-silver mt-1">Brand Partners</p></div>
+  </div>
+</section>
+
+<!-- ===== BRAND TICKER ===== -->
+<section class="bg-charcoal py-6 overflow-hidden">
+  <div class="max-w-full mx-auto">
+    <div class="flex overflow-hidden">
+      <div class="brand-ticker whitespace-nowrap">
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Samsung</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">LG</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Whirlpool</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Sony</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Daikin</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Bosch</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Panasonic</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Voltas</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Godrej</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Haier</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Samsung</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">LG</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Whirlpool</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Sony</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Daikin</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Bosch</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Panasonic</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Voltas</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Godrej</span>
+        <span class="text-silver/40 font-heading font-semibold text-lg tracking-wide">Haier</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRODUCTS ===== -->
+<section id="products" class="py-24 bg-warm-white">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="text-center mb-16 section-header">
+      <p class="text-amber font-medium text-sm tracking-widest uppercase mb-3">Our Collection</p>
+      <h2 class="font-heading font-bold text-3xl sm:text-4xl text-charcoal">Product Categories</h2>
+      <p class="text-silver mt-4 max-w-xl mx-auto">From cooling solutions to entertainment, we stock the best brands to keep your home running beautifully.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-black/5 cursor-pointer">
+        <div class="h-48 bg-gradient-to-br from-blue-50 to-blue-100 overflow-hidden">
+          <img src="air_conditioner.png" alt="Air Conditioners" class="w-full h-full object-contain p-4 hover:scale-105 transition-transform duration-500">
+        </div>
+        <div class="p-6"><h3 class="font-heading font-semibold text-lg text-charcoal">Air Conditioners</h3><p class="text-silver text-sm mt-2">Stay cool with energy-efficient split and window ACs from top brands.</p></div>
+      </div>
+
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-black/5 cursor-pointer">
+        <div class="h-48 bg-gradient-to-br from-cyan-50 to-cyan-100 overflow-hidden">
+          <img src="refrigerator.png" alt="Refrigerators" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+        </div>
+        <div class="p-6"><h3 class="font-heading font-semibold text-lg text-charcoal">Refrigerators</h3><p class="text-silver text-sm mt-2">Single door, double door, and side-by-side fridges for every family size.</p></div>
+      </div>
+
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-black/5 cursor-pointer">
+        <div class="h-48 bg-gradient-to-br from-purple-50 to-purple-100 overflow-hidden">
+          <img src="washing_machine.png" alt="Washing Machines" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+        </div>
+        <div class="p-6"><h3 class="font-heading font-semibold text-lg text-charcoal">Washing Machines</h3><p class="text-silver text-sm mt-2">Fully automatic and semi-automatic washers with the latest features.</p></div>
+      </div>
+
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-black/5 cursor-pointer">
+        <div class="h-48 bg-gradient-to-br from-amber-50 to-amber-100 overflow-hidden">
+          <img src="led_tv.png" alt="LED TVs" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+        </div>
+        <div class="p-6"><h3 class="font-heading font-semibold text-lg text-charcoal">LED TVs</h3><p class="text-silver text-sm mt-2">Smart TVs, 4K displays, and premium panels for an immersive experience.</p></div>
+      </div>
+
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-black/5 cursor-pointer">
+        <div class="h-48 bg-gradient-to-br from-orange-50 to-orange-100 overflow-hidden">
+          <img src="kitchen_appliances.png" alt="Kitchen Appliances" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+        </div>
+        <div class="p-6"><h3 class="font-heading font-semibold text-lg text-charcoal">Kitchen Appliances</h3><p class="text-silver text-sm mt-2">Mixers, grinders, microwaves, chimneys, and more for your kitchen.</p></div>
+      </div>
+
+      <div class="product-card bg-white rounded-2xl overflow-hidden border border-black/5 cursor-pointer">
+        <div class="h-48 bg-gradient-to-br from-green-50 to-green-100 overflow-hidden">
+          <img src="home_appliances.png" alt="Home Appliances" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+        </div>
+        <div class="p-6"><h3 class="font-heading font-semibold text-lg text-charcoal">Home Appliances</h3><p class="text-silver text-sm mt-2">Water purifiers, fans, irons, geysers, and everyday home essentials.</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY CHOOSE US ===== -->
+<section id="why-us" class="py-24 bg-charcoal">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="text-center mb-16 section-header">
+      <p class="text-amber font-medium text-sm tracking-widest uppercase mb-3">The Vasanthi Difference</p>
+      <h2 class="font-heading font-bold text-3xl sm:text-4xl text-warm-white">Why Families in Kanchipuram Choose Us</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="bg-charcoal-light rounded-2xl p-8 border border-white/5 why-card">
+        <div class="w-12 h-12 rounded-xl bg-amber/10 flex items-center justify-center mb-5"><svg width="24" height="24" fill="none" stroke="#D4922A" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3 class="font-heading font-semibold text-lg text-warm-white">Trusted Local Store</h3>
+        <p class="text-silver text-sm mt-3 leading-relaxed">Over two decades of serving Kanchipuram families with honest advice and reliable products.</p>
+      </div>
+      <div class="bg-charcoal-light rounded-2xl p-8 border border-white/5 why-card">
+        <div class="w-12 h-12 rounded-xl bg-amber/10 flex items-center justify-center mb-5"><svg width="24" height="24" fill="none" stroke="#D4922A" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3 class="font-heading font-semibold text-lg text-warm-white">Wide Product Selection</h3>
+        <p class="text-silver text-sm mt-3 leading-relaxed">Hundreds of appliances across leading brands — something for every home and budget.</p>
+      </div>
+      <div class="bg-charcoal-light rounded-2xl p-8 border border-white/5 why-card">
+        <div class="w-12 h-12 rounded-xl bg-amber/10 flex items-center justify-center mb-5"><svg width="24" height="24" fill="none" stroke="#D4922A" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg></div>
+        <h3 class="font-heading font-semibold text-lg text-warm-white">Expert Guidance</h3>
+        <p class="text-silver text-sm mt-3 leading-relaxed">Our trained staff helps you pick exactly what suits your space, needs, and budget.</p>
+      </div>
+      <div class="bg-charcoal-light rounded-2xl p-8 border border-white/5 why-card">
+        <div class="w-12 h-12 rounded-xl bg-amber/10 flex items-center justify-center mb-5"><svg width="24" height="24" fill="none" stroke="#D4922A" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3 class="font-heading font-semibold text-lg text-warm-white">Installation Support</h3>
+        <p class="text-silver text-sm mt-3 leading-relaxed">Professional installation arranged for ACs, TVs, and other appliances at your convenience.</p>
+      </div>
+      <div class="bg-charcoal-light rounded-2xl p-8 border border-white/5 why-card">
+        <div class="w-12 h-12 rounded-xl bg-amber/10 flex items-center justify-center mb-5"><svg width="24" height="24" fill="none" stroke="#D4922A" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <h3 class="font-heading font-semibold text-lg text-warm-white">Competitive Pricing</h3>
+        <p class="text-silver text-sm mt-3 leading-relaxed">Best prices with seasonal offers, exchange deals, and easy EMI options on all products.</p>
+      </div>
+      <div class="bg-charcoal-light rounded-2xl p-8 border border-white/5 why-card">
+        <div class="w-12 h-12 rounded-xl bg-amber/10 flex items-center justify-center mb-5"><svg width="24" height="24" fill="none" stroke="#D4922A" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+        <h3 class="font-heading font-semibold text-lg text-warm-white">Customer-First Service</h3>
+        <p class="text-silver text-sm mt-3 leading-relaxed">Your satisfaction drives everything we do — from first visit to after-sales care.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section id="services" class="py-24 bg-warm-white">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="text-center mb-16 section-header">
+      <p class="text-amber font-medium text-sm tracking-widest uppercase mb-3">How We Help</p>
+      <h2 class="font-heading font-bold text-3xl sm:text-4xl text-charcoal">Our Services &amp; Support</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <div class="service-card bg-white rounded-2xl p-7 border-2 border-black/5">
+        <div class="text-amber text-2xl mb-4">01</div>
+        <h3 class="font-heading font-semibold text-charcoal">Product Consultation</h3>
+        <p class="text-silver text-sm mt-2">Walk in or call — our team will help you choose the right appliance for your needs.</p>
+      </div>
+      <div class="service-card bg-white rounded-2xl p-7 border-2 border-black/5">
+        <div class="text-amber text-2xl mb-4">02</div>
+        <h3 class="font-heading font-semibold text-charcoal">Installation Support</h3>
+        <p class="text-silver text-sm mt-2">We coordinate professional installation so you don't have to worry about setup.</p>
+      </div>
+      <div class="service-card bg-white rounded-2xl p-7 border-2 border-black/5">
+        <div class="text-amber text-2xl mb-4">03</div>
+        <h3 class="font-heading font-semibold text-charcoal">Warranty Guidance</h3>
+        <p class="text-silver text-sm mt-2">Clear information on manufacturer warranties and extended protection plans.</p>
+      </div>
+      <div class="service-card bg-white rounded-2xl p-7 border-2 border-black/5">
+        <div class="text-amber text-2xl mb-4">04</div>
+        <h3 class="font-heading font-semibold text-charcoal">After-Sales Support</h3>
+        <p class="text-silver text-sm mt-2">Need help post-purchase? We assist with service requests and brand coordination.</p>
+      </div>
+      <div class="service-card bg-white rounded-2xl p-7 border-2 border-black/5">
+        <div class="text-amber text-2xl mb-4">05</div>
+        <h3 class="font-heading font-semibold text-charcoal">Store Visit Assistance</h3>
+        <p class="text-silver text-sm mt-2">Schedule a visit and our staff will give you a guided walkthrough of our showroom.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" class="py-24 bg-cream">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="section-header">
+        <p class="text-amber font-medium text-sm tracking-widest uppercase mb-3">Our Story</p>
+        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-charcoal">A Name Kanchipuram Trusts</h2>
+        <p class="text-charcoal/70 mt-6 leading-relaxed">Vasanthi TV Centre is a trusted home appliance showroom in the heart of Kanchipuram. For over two decades, we have been helping families find the right products for their homes — from air conditioners and refrigerators to LED TVs and kitchen essentials.</p>
+        <p class="text-charcoal/70 mt-4 leading-relaxed">What sets us apart is our commitment to dependable service and genuine local support. Every customer who walks through our doors receives personal attention, honest product advice, and the assurance that we stand behind every purchase.</p>
+        <a href="#contact" class="cta-btn inline-block mt-8 bg-amber text-white font-semibold px-7 py-3.5 rounded-full">Visit Our Showroom</a>
+      </div>
+      <div class="rounded-2xl bg-charcoal-light aspect-[4/3] overflow-hidden border border-white/5">
+        <img src="showroom_interior.png" alt="Vasanthi TV Centre Showroom Interior" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="py-24 bg-warm-white">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="text-center mb-16 section-header">
+      <p class="text-amber font-medium text-sm tracking-widest uppercase mb-3">Customer Love</p>
+      <h2 class="font-heading font-bold text-3xl sm:text-4xl text-charcoal">What Our Customers Say</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <div class="testimonial-card rounded-2xl p-8 border border-black/5 test-card">
+        <div class="flex gap-1 mb-4">
+          <span class="text-amber">★</span><span class="text-amber">★</span><span class="text-amber">★</span><span class="text-amber">★</span><span class="text-amber">★</span>
+        </div>
+        <p class="text-charcoal/70 text-sm leading-relaxed">"Bought a Samsung refrigerator from Vasanthi TV Centre last month. The staff was very helpful in explaining features and the delivery was on time. Highly recommend for anyone in Kanchipuram."</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-amber/10 flex items-center justify-center font-heading font-bold text-amber text-sm">R</div>
+          <div><p class="font-heading font-semibold text-sm text-charcoal">Ramesh K.</p><p class="text-xs text-silver">Kanchipuram</p></div>
+        </div>
+      </div>
+      <div class="testimonial-card rounded-2xl p-8 border border-black/5 test-card">
+        <div class="flex gap-1 mb-4">
+          <span class="text-amber">★</span><span class="text-amber">★</span><span class="text-amber">★</span><span class="text-amber">★</span><span class="text-amber">★</span>
+        </div>
+        <p class="text-charcoal/70 text-sm leading-relaxed">"We got our AC and washing machine from here. The pricing was fair and they even helped arrange the installation. It's good to have a reliable local store like this."</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-amber/10 flex items-center justify-center font-heading font-bold text-amber text-sm">P</div>
+          <div><p class="font-heading font-semibold text-sm text-charcoal">Priya S.</p><p class="text-xs text-silver">Pillaiyarpalayam</p></div>
+        </div>
+      </div>
+      <div class="testimonial-card rounded-2xl p-8 border border-black/5 test-card">
+        <div class="flex gap-1 mb-4">
+          <span class="text-amber">★</span><span class="text-amber">★</span><span class="text-amber">★</span><span class="text-amber">★</span><span class="text-amber">★</span>
+        </div>
+        <p class="text-charcoal/70 text-sm leading-relaxed">"Excellent service! I was confused between different TV models and the Vasanthi team patiently explained everything. Bought a 55-inch LG TV and couldn't be happier."</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-amber/10 flex items-center justify-center font-heading font-bold text-amber text-sm">M</div>
+          <div><p class="font-heading font-semibold text-sm text-charcoal">Murugan V.</p><p class="text-xs text-silver">Sriperumbudur</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" class="py-24 bg-charcoal">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="text-center mb-16 section-header">
+      <p class="text-amber font-medium text-sm tracking-widest uppercase mb-3">Get in Touch</p>
+      <h2 class="font-heading font-bold text-3xl sm:text-4xl text-warm-white">Visit Our Showroom</h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <div class="space-y-6">
+        <div class="bg-charcoal-light rounded-2xl p-7 border border-white/5">
+          <h3 class="font-heading font-semibold text-warm-white mb-2">Address</h3>
+          <p class="text-silver text-sm leading-relaxed">Vasanthi TV Centre<br>Ground, 1st and 2nd Floors,<br>No. 104, P.S.K. Street,<br>Kanchipuram, Tamil Nadu - 631502</p>
+        </div>
+        <div class="bg-charcoal-light rounded-2xl p-7 border border-white/5">
+          <h3 class="font-heading font-semibold text-warm-white mb-2">Store Hours</h3>
+          <p class="text-silver text-sm">Monday – Saturday: 9:30 AM – 8:30 PM</p>
+          <p class="text-silver text-sm">Sunday: 9:30 AM – 2:00 PM</p>
+        </div>
+        <div class="flex flex-wrap gap-4">
+          <a href="tel:+919894121661" class="cta-btn bg-amber text-white font-semibold px-7 py-3.5 rounded-full inline-flex items-center gap-2 flex-1 justify-center">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            Call Now
+          </a>
+          <a href="https://wa.me/919894121661" target="_blank" class="cta-btn bg-green-600 text-white font-semibold px-7 py-3.5 rounded-full inline-flex items-center gap-2 flex-1 justify-center">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.12 1.52 5.856L0 24l6.335-1.652A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.82a9.78 9.78 0 01-5.202-1.49l-.374-.222-3.87 1.01 1.034-3.772-.244-.388A9.78 9.78 0 012.18 12 9.82 9.82 0 0112 2.18 9.82 9.82 0 0121.82 12 9.82 9.82 0 0112 21.82z"/></svg>
+            WhatsApp Us
+          </a>
+        </div>
+      </div>
+      <div class="rounded-2xl bg-charcoal-light border border-white/5 overflow-hidden min-h-[300px]">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3892.4!2d79.7049975!3d12.8320619!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52c2f7e991b0cf%3A0x82b1bdb7c904a4c0!2sVasanthi%20TV%20Centre!5e0!3m2!1sen!2sin!4v1700000000000" width="100%" height="100%" style="border:0;min-height:300px" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Vasanthi TV Centre Location"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bg-charcoal border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-5 py-12">
+    <div class="grid sm:grid-cols-3 gap-8">
+      <div>
+        <h3 class="font-heading font-bold text-lg text-warm-white">Vasanthi <span class="text-amber">TV Centre</span></h3>
+        <p class="text-silver text-sm mt-3 leading-relaxed">Kanchipuram's trusted home appliance showroom — serving families with quality products and honest service since 2000.</p>
+      </div>
+      <div>
+        <h4 class="font-heading font-semibold text-warm-white mb-4">Quick Links</h4>
+        <div class="space-y-2">
+          <a href="#products" class="block text-silver text-sm hover:text-amber transition-colors">Products</a>
+          <a href="#why-us" class="block text-silver text-sm hover:text-amber transition-colors">Why Choose Us</a>
+          <a href="#services" class="block text-silver text-sm hover:text-amber transition-colors">Services</a>
+          <a href="#about" class="block text-silver text-sm hover:text-amber transition-colors">About</a>
+          <a href="#contact" class="block text-silver text-sm hover:text-amber transition-colors">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-heading font-semibold text-warm-white mb-4">Reach Us</h4>
+        <p class="text-silver text-sm">No. 104, P.S.K. Street</p>
+        <p class="text-silver text-sm">Kanchipuram, TN 631502</p>
+        <p class="text-silver text-sm mt-2">Phone: +91 98941 21661</p>
+        <a href="https://wa.me/919894121661" class="text-amber text-sm mt-1 inline-block hover:underline">WhatsApp Us →</a>
+      </div>
+    </div>
+    <div class="border-t border-white/5 mt-10 pt-8 text-center">
+      <p class="text-silver/50 text-xs">© 2026 Vasanthi TV Centre. All rights reserved. Your trusted home appliance partner in Kanchipuram.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== FLOATING WHATSAPP BUTTON ===== -->
+<a href="https://wa.me/919894121661" target="_blank" class="whatsapp-fab fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110" aria-label="Chat on WhatsApp">
+  <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.12 1.52 5.856L0 24l6.335-1.652A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.82a9.78 9.78 0 01-5.202-1.49l-.374-.222-3.87 1.01 1.034-3.772-.244-.388A9.78 9.78 0 012.18 12 9.82 9.82 0 0112 2.18 9.82 9.82 0 0121.82 12 9.82 9.82 0 0112 21.82z"/></svg>
+</a>
+
+<script>
+// ===== CANVAS: Hero Particles =====
+(function(){
+  const c=document.getElementById('hero-canvas'),ctx=c.getContext('2d');
+  let w,h,orbs=[];
+  function resize(){w=c.width=c.parentElement.offsetWidth;h=c.height=c.parentElement.offsetHeight}
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<30;i++)orbs.push({x:Math.random()*2000,y:Math.random()*1200,r:Math.random()*80+20,dx:(Math.random()-.5)*.3,dy:(Math.random()-.5)*.3,a:Math.random()*.06+.02});
+  function draw(){ctx.clearRect(0,0,w,h);orbs.forEach(o=>{const g=ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);g.addColorStop(0,`rgba(212,146,42,${o.a})`);g.addColorStop(1,'rgba(212,146,42,0)');ctx.beginPath();ctx.arc(o.x,o.y,o.r,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();o.x+=o.dx;o.y+=o.dy;if(o.x<-100||o.x>w+100)o.dx*=-1;if(o.y<-100||o.y>h+100)o.dy*=-1});requestAnimationFrame(draw)}
+  draw();
+})();
+
+gsap.registerPlugin(ScrollTrigger);
+
+// ===== NAVBAR =====
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('navbar');
+  if(window.scrollY>100){nav.style.background='rgba(253,252,250,.95)';nav.style.backdropFilter='blur(10px)';nav.style.boxShadow='0 1px 3px rgba(0,0,0,.05)';nav.classList.add('nav-scrolled')}
+  else{nav.style.background='transparent';nav.style.backdropFilter='none';nav.style.boxShadow='none';nav.classList.remove('nav-scrolled')}
+});
+
+// ===== MOBILE MENU =====
+const toggle=document.getElementById('menu-toggle'),mob=document.getElementById('mobile-menu');
+let menuOpen=false;
+toggle.addEventListener('click',()=>{
+  menuOpen=!menuOpen;
+  mob.classList.toggle('open',menuOpen);
+  document.getElementById('bar1').style.transform=menuOpen?'rotate(45deg) translate(3px,3px)':'none';
+  document.getElementById('bar2').style.opacity=menuOpen?'0':'1';
+  document.getElementById('bar3').style.transform=menuOpen?'rotate(-45deg) translate(3px,-3px)':'none';
+  [document.getElementById('bar1'),document.getElementById('bar2'),document.getElementById('bar3')].forEach(b=>b.style.background=menuOpen?'#FAF8F5':'#1a1a1a');
+});
+document.querySelectorAll('.mob-link').forEach(l=>l.addEventListener('click',()=>{
+  menuOpen=false;mob.classList.remove('open');
+  document.getElementById('bar1').style.transform='none';document.getElementById('bar2').style.opacity='1';document.getElementById('bar3').style.transform='none';
+  [document.getElementById('bar1'),document.getElementById('bar2'),document.getElementById('bar3')].forEach(b=>b.style.background='#1a1a1a');
+}));
+
+// ===== HERO BACKGROUND VIDEO =====
+(function(){
+  const hero=document.getElementById('hero');
+  const heroVideo=document.getElementById('hero-video');
+  const lastFrame=document.getElementById('hero-lastframe');
+  if(!hero||!heroVideo||!lastFrame)return;
+  const isMobile=window.matchMedia('(max-width: 767px)').matches;
+  const webmSrc=isMobile?heroVideo.dataset.mobileWebm:heroVideo.dataset.desktopWebm;
+  const mp4Src=isMobile?heroVideo.dataset.mobileMp4:heroVideo.dataset.desktopMp4;
+  const posterSrc=isMobile?heroVideo.dataset.mobilePoster:heroVideo.dataset.desktopPoster;
+  heroVideo.poster=posterSrc;
+  lastFrame.style.backgroundImage=`url('${posterSrc}')`;
+  heroVideo.innerHTML=`<source src="${webmSrc}" type="video/webm"><source src="${mp4Src}" type="video/mp4">`;
+  heroVideo.load();
+  heroVideo.play().catch(()=>{});
+  heroVideo.addEventListener('ended',()=>{
+    const freezeTime=Math.max(0,heroVideo.duration-.03);
+    heroVideo.currentTime=freezeTime;
+    heroVideo.pause();
+    hero.classList.add('hero-video-ended');
+  });
+})();
+
+// ===== SCROLL ANIMATIONS =====
+gsap.utils.toArray('.hero-fade').forEach((el,i)=>gsap.from(el,{opacity:0,y:40,duration:.8,delay:.4+i*.12,ease:'power2.out'}));
+gsap.utils.toArray('.section-header').forEach(el=>gsap.from(el,{scrollTrigger:{trigger:el,start:'top 85%'},opacity:0,y:30,duration:.7,ease:'power2.out'}));
+gsap.utils.toArray('.product-card').forEach((el,i)=>gsap.from(el,{scrollTrigger:{trigger:el,start:'top 88%'},opacity:0,y:40,duration:.6,delay:i*.08,ease:'power2.out'}));
+gsap.utils.toArray('.why-card').forEach((el,i)=>gsap.from(el,{scrollTrigger:{trigger:el,start:'top 88%'},opacity:0,y:30,duration:.6,delay:i*.08,ease:'power2.out'}));
+gsap.utils.toArray('.service-card').forEach((el,i)=>gsap.from(el,{scrollTrigger:{trigger:el,start:'top 88%'},opacity:0,y:30,duration:.6,delay:i*.08,ease:'power2.out'}));
+gsap.utils.toArray('.test-card').forEach((el,i)=>gsap.from(el,{scrollTrigger:{trigger:el,start:'top 88%'},opacity:0,y:30,duration:.6,delay:i*.1,ease:'power2.out'}));
+
+// ===== ANIMATED COUNTERS =====
+document.querySelectorAll('.stat-counter').forEach(el=>{
+  const target=+el.dataset.target;
+  ScrollTrigger.create({trigger:el,start:'top 90%',once:true,onEnter:()=>{
+    gsap.to({v:0},{v:target,duration:2,ease:'power1.out',onUpdate:function(){
+      let val=Math.round(this.targets()[0].v);
+      el.textContent=val>=1000?val.toLocaleString()+'+':val+'+';
+    }});
+  }});
+});
+</script>
+</body>
+</html>
